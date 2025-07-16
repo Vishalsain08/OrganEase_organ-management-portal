@@ -19,6 +19,11 @@ app.use('/api/auth', authRoutes);
 app.use('/api/organs', organRoutes);
 app.use('/api/requests', requestRoutes);
 
+// ✅ Default route
+app.get('/', (req, res) => {
+  res.send('Welcome to the OrganEase API 🚑');
+});
+
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

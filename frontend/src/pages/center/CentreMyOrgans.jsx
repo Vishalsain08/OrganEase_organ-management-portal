@@ -4,9 +4,11 @@ import axiosInstance from '../../api/axios';
 import { toast } from 'react-toastify';
 import { FaBoxes, FaPlusCircle, FaTrash } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import Loader from '../../components/Loader';
 
 const CentreMyOrgans = () => {
   const [organs, setOrgans] = useState([]);
+  const [loading, setLoading] = useState(true); // ✅ loading state
 
   const fetchOrgans = async () => {
     try {
@@ -14,6 +16,8 @@ const CentreMyOrgans = () => {
       setOrgans(res.data);
     } catch (err) {
       toast.error('Failed to fetch your organs');
+    } finally {
+      setLoading(false); // ✅ hide loader
     }
   };
 
@@ -32,6 +36,8 @@ const CentreMyOrgans = () => {
   useEffect(() => {
     fetchOrgans();
   }, []);
+
+  if (loading) return <Loader />; // ✅ show loader while fetching
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 via-cyan-100 to-white px-4 py-16 text-blue-950">

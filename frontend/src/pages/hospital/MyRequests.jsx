@@ -7,6 +7,7 @@ import {
   FaTimesCircle,
   FaClock,
 } from 'react-icons/fa';
+import Loader from '../../components/Loader'; // ✅ Import loader
 
 const MyRequests = () => {
   const [requests, setRequests] = useState([]);
@@ -50,57 +51,55 @@ const MyRequests = () => {
         </div>
 
         {/* Stats Cards */}
-        {/* Stats Cards with Stylish Left Borders */}
-<div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-  {[
-    {
-      label: 'Total Requests',
-      value: stats.total,
-      color: 'blue',
-      icon: <FaClipboardList className="text-blue-500" />,
-      border: 'border-l-8 border-blue-400',
-    },
-    {
-      label: 'Accepted',
-      value: stats.accepted,
-      color: 'green',
-      icon: <FaCheckCircle className="text-green-500" />,
-      border: 'border-l-8 border-green-400',
-    },
-    {
-      label: 'Rejected',
-      value: stats.rejected,
-      color: 'red',
-      icon: <FaTimesCircle className="text-red-500" />,
-      border: 'border-l-8 border-red-400',
-    },
-    {
-      label: 'Pending',
-      value: stats.pending,
-      color: 'yellow',
-      icon: <FaClock className="text-yellow-500" />,
-      border: 'border-l-8 border-yellow-400',
-    },
-  ].map((item, index) => (
-    <div
-      key={index}
-      className={`bg-white ${item.border} rounded-xl shadow-md p-5 pl-6 flex flex-col justify-center transition-all hover:shadow-lg hover:scale-[1.03]`}
-    >
-      <div className="flex items-center gap-3 mb-4">
-        <div className="text-3xl">{item.icon}</div>
-        <div className="text-left">
-          <h4 className="text-md font-semibold text-gray-700">{item.label}</h4>
-          <p className={`text-2xl font-bold text-${item.color}-600`}>{item.value}</p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+          {[
+            {
+              label: 'Total Requests',
+              value: stats.total,
+              color: 'blue',
+              icon: <FaClipboardList className="text-blue-500" />,
+              border: 'border-l-8 border-blue-400',
+            },
+            {
+              label: 'Accepted',
+              value: stats.accepted,
+              color: 'green',
+              icon: <FaCheckCircle className="text-green-500" />,
+              border: 'border-l-8 border-green-400',
+            },
+            {
+              label: 'Rejected',
+              value: stats.rejected,
+              color: 'red',
+              icon: <FaTimesCircle className="text-red-500" />,
+              border: 'border-l-8 border-red-400',
+            },
+            {
+              label: 'Pending',
+              value: stats.pending,
+              color: 'yellow',
+              icon: <FaClock className="text-yellow-500" />,
+              border: 'border-l-8 border-yellow-400',
+            },
+          ].map((item, index) => (
+            <div
+              key={index}
+              className={`bg-white ${item.border} rounded-xl shadow-md p-5 pl-6 flex flex-col justify-center transition-all hover:shadow-lg hover:scale-[1.03]`}
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="text-3xl">{item.icon}</div>
+                <div className="text-left">
+                  <h4 className="text-md font-semibold text-gray-700">{item.label}</h4>
+                  <p className={`text-2xl font-bold text-${item.color}-600`}>{item.value}</p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
-    </div>
-  ))}
-</div>
 
-
-        {/* Loader / Empty / Table */}
+        {/* Table or Loader */}
         {loading ? (
-          <div className="text-center text-blue-600 font-semibold text-lg">Loading...</div>
+          <Loader />
         ) : requests.length === 0 ? (
           <div className="text-center text-gray-600 text-lg">No requests made yet.</div>
         ) : (

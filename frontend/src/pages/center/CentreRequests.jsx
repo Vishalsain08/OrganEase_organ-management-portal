@@ -3,9 +3,11 @@ import axiosInstance from '../../api/axios';
 import { toast } from 'react-toastify';
 import { FaClipboardList } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import Loader from '../../components/Loader';
 
 const CentreRequests = () => {
   const [requests, setRequests] = useState([]);
+  const [loading, setLoading] = useState(true); // ✅ loading state
 
   const fetchRequests = async () => {
     try {
@@ -13,6 +15,8 @@ const CentreRequests = () => {
       setRequests(res.data);
     } catch (err) {
       toast.error('Failed to fetch requests');
+    } finally {
+      setLoading(false); // ✅ hide loader
     }
   };
 
@@ -29,6 +33,8 @@ const CentreRequests = () => {
       toast.error('Failed to update status');
     }
   };
+
+  if (loading) return <Loader />; // ✅ show loader while loading
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-cyan-50 to-blue-100 px-4 py-16 text-blue-950">

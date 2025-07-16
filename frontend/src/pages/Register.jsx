@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../api/axios';
 import { useAuth } from '../context/AuthContext';
+import { FaUserPlus, FaHeartbeat } from 'react-icons/fa';
 
 const Register = () => {
   const [form, setForm] = useState({
@@ -25,7 +26,6 @@ const Register = () => {
       const res = await axiosInstance.post('/auth/register', form);
       const { token, user } = res.data;
       login(token, user.role, user);
-
       navigate(`/${form.role}/dashboard`);
     } catch (err) {
       alert(err.response?.data?.message || 'Registration failed');
@@ -37,6 +37,19 @@ const Register = () => {
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-blue-50 flex items-center justify-center px-4 py-12">
       <div className="bg-white text-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-md border border-blue-100">
+
+        {/* 💙 CTA Section Above the Form */}
+        <div className="mb-8 text-center">
+          <div className="flex justify-center items-center gap-3 mb-2">
+            <FaUserPlus className="text-2xl text-cyan-500 animate-bounce" />
+            <h2 className="text-xl font-bold text-cyan-700">Join OrganEase Today</h2>
+          </div>
+          <p className="text-sm text-gray-600">
+            Save lives, streamline transplants, and join a powerful network of healthcare heroes. 💙
+          </p>
+        </div>
+
+        {/* 📝 Registration Form */}
         <h2 className="text-2xl font-bold mb-6 text-center text-cyan-600">Create Your Account</h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -46,7 +59,7 @@ const Register = () => {
               type="text"
               name="name"
               className="w-full p-3 rounded-lg border border-gray-300 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-300 outline-none transition duration-300 hover:border-cyan-400 shadow-sm"
-              placeholder="John Doe"
+              placeholder="Enter your name"
               onChange={handleChange}
               required
             />
@@ -58,7 +71,7 @@ const Register = () => {
               type="email"
               name="email"
               className="w-full p-3 rounded-lg border border-gray-300 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-300 outline-none transition duration-300 hover:border-cyan-400 shadow-sm"
-              placeholder="you@example.com"
+              placeholder="Enter your Email"
               onChange={handleChange}
               required
             />
@@ -70,7 +83,7 @@ const Register = () => {
               type="password"
               name="password"
               className="w-full p-3 rounded-lg border border-gray-300 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-300 outline-none transition duration-300 hover:border-cyan-400 shadow-sm"
-              placeholder="••••••••"
+              placeholder="Enter password"
               onChange={handleChange}
               required
             />

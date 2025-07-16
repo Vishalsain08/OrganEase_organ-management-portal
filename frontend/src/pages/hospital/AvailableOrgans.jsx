@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import axiosInstance from '../../api/axios';
 import { Link } from 'react-router-dom';
 import { FaHeartbeat, FaTint, FaHospitalUser } from 'react-icons/fa';
+import Loader from '../../components/Loader';
 
 const AvailableOrgans = () => {
   const [organs, setOrgans] = useState([]);
+  const [loading, setLoading] = useState(true); // ✅ Add loading state
 
   useEffect(() => {
     const fetchOrgans = async () => {
@@ -13,11 +15,15 @@ const AvailableOrgans = () => {
         setOrgans(res.data);
       } catch (err) {
         console.error('Error fetching organs:', err);
+      } finally {
+        setLoading(false); // ✅ Hide loader after fetch
       }
     };
 
     fetchOrgans();
   }, []);
+
+  if (loading) return <Loader />; // ✅ Show loader while fetching
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-white py-12 px-4 text-blue-950">

@@ -8,9 +8,11 @@ import {
   FaHeartbeat,
 } from 'react-icons/fa';
 import axiosInstance from '../../api/axios';
+import Loader from '../../components/Loader';
 
 const HospitalDashboard = () => {
   const [recentRequests, setRecentRequests] = useState([]);
+  const [loading, setLoading] = useState(true); // ✅ loader state
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -24,11 +26,15 @@ const HospitalDashboard = () => {
         setRecentRequests(sorted.slice(0, 2));
       } catch (err) {
         console.error('Error fetching dashboard data', err);
+      } finally {
+        setLoading(false); // ✅ hide loader after fetch
       }
     };
 
     fetchData();
   }, []);
+
+  if (loading) return <Loader />; // ✅ show loader while fetching
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 via-cyan-100 to-white px-4 py-16 text-blue-950">
